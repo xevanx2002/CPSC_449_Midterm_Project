@@ -17,6 +17,20 @@ public class EventService {
     private EventRepository eventRepository;
     private OrganizerRepository organizerRepository;
     private VenueRepository venueRepository;
+    private EventResponseDTO mapToEventResponse(Event event){
+        List<TicketTypeDTO> ticketTypeDTOs = event.getTicketTypes().stream()
+                .map(ticket -> new TicketTypeDTO(
+                        ticket.getTicketTypeId(), ticket.getName(),
+                        ticket.getPrice(), ticket.getQuantityAvailable()
+                )).toList();
+        return new EventResponseDTO(
+                event.getEventId(), event.getTitle(),
+                event.getDescription(), event.getEventDate(),
+                event.getStatus().name(), event.getOrganizerId().getName(),
+                event.getVenueId().getName(), ticketTypeDTOs
+        );
+    }
+
     public EventService(EventRepository eventRepository, OrganizerRepository organizerRepository, VenueRepository venueRepository) {
         this.eventRepository = eventRepository;
         this.organizerRepository = organizerRepository;
@@ -69,5 +83,16 @@ public class EventService {
     public Event getEventById(Long eventId) {
         return eventRepository.findById(eventId)
                 .orElseThrow(() -> new ResourceNotFoundException("Event"));
+    }
+
+    public List<EventResponseDTO> getUpcomingEvents() {
+        return eventRepository.findByStatus(EventStatus.UPCOMING)
+                .stream().map(this::mapToEventResponse).toList();
+    }
+
+    public EventResponseDTO getEventDetails(Long eventId) {
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new ResourceNotFoundException("Event"));
+        return mapToEventResponse(event);
     }
 }

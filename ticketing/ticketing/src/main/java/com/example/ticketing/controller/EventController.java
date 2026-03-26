@@ -6,6 +6,7 @@ import com.example.ticketing.dto.RevenueDTO;
 import com.example.ticketing.service.EventService;
 import com.example.ticketing.service.BookingService;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/events")
@@ -21,6 +22,16 @@ public class EventController {
     @PostMapping
     public EventResponseDTO createEvent(@RequestBody CreateEventRequest createEventRequest) {
         return eventService.createEvent(createEventRequest);
+    }
+
+    @GetMapping
+    public List<EventResponseDTO> getUpcomingEvents() {
+        return eventService.getUpcomingEvents();
+    }
+
+    @GetMapping("/{id}")
+    public EventResponseDTO getEventDetails(@PathVariable Long id) {
+        return eventService.getEventDetails(id);
     }
 
     @GetMapping("/{id}/revenue")

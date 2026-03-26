@@ -19,7 +19,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String bookingReference;
 
     @Column(nullable = false)
