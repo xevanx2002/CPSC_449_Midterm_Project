@@ -5,7 +5,7 @@
 This project is the building of a backend API Evennt Ticketing System for a a event ticket distributer. Utilizing Spring Boot, JPA entity relationships, DTO patterns, I developed a useable backend system that takes in user information and applies logic to manipulate the data to fit within the database. Backend systems are implemented to manipulate events, venues, organizers, individuals, and ticket information.
 
 ## Youtube Showcase
-###
+### https://youtu.be/nllfPwaldDE
 
 ## Functional Endpoints
 ### POST /api/organizers
